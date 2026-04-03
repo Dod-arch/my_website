@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dodli Nandi · Technical Writer</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,400;0,500;1,400&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --text: #1c1c1a;
+    --text-soft: #2e2e2b;
+    --text-faint: #6b6b65;
+    --bg: #ffffff;
+    --bg-warm: #f8f7f4;
+    --line: #e4e2dc;
+    --link: #1c1c1a;
+    --green: #1e5c3a;
+    --green-bg: #eef5f1;
+    --green-border: #c2daca;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 17px;
+    line-height: 1.75;
+    color: var(--text);
+    background: var(--bg);
+  }
+
+  a { color: var(--link); text-decoration: underline; text-underline-offset: 3px; }
+  a:hover { opacity: 0.72; }
+
+  /* NAV */
+  nav {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(255,255,255,0.94);
+    backdrop-filter: blur(6px);
+    border-bottom: 1px solid var(--line);
+    padding: 0 2rem;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 52px;
+  }
+  .site-name {
+    font-family: 'IBM Plex Serif', serif;
+    font-size: 0.95rem; font-weight: 400;
+    color: var(--text); text-decoration: none;
+  }
+  .nav-links { display: flex; gap: 1.75rem; list-style: none; }
+  .nav-links a { font-size: 0.82rem; color: var(--text-soft); text-decoration: none; }
+  .nav-links a:hover { color: var(--text); }
+
+  /* PAGE */
+  .page { max-width: 700px; margin: 0 auto; padding: 0 1.75rem; }
+
+  /* HERO */
+  .hero { padding: 5rem 0 4rem; border-bottom: 1px solid var(--line); }
+  .hero-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 0.72rem; font-weight: 500;
+    letter-spacing: 0.09em; text-transform: uppercase;
+    color: var(--green);
+    background: var(--green-bg);
+    border: 1px solid var(--green-border);
+    border-radius: 20px;
+    padding: 0.2rem 0.75rem;
+    margin-bottom: 1.75rem;
+  }
+  .hero-tag-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--green); flex-shrink: 0; }
+  .hero h1 {
+    font-family: 'IBM Plex Serif', serif;
+    font-size: clamp(2rem, 5vw, 2.75rem);
+    font-weight: 400; line-height: 1.25;
+    color: var(--text); margin-bottom: 1.5rem;
+  }
+  .hero h1 em { font-style: italic; color: var(--text-soft); }
+  .hero p { color: var(--text-soft); max-width: 55ch; margin-bottom: 1rem; }
+  .hero-btns { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: 2rem; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 0.85rem; font-weight: 500;
+    padding: 0.55rem 1.2rem;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: opacity 0.15s;
+  }
+  .btn:hover { opacity: 0.8; }
+  .btn-solid { background: var(--text); color: #fff; }
+  .btn-outline { background: transparent; color: var(--text); border: 1px solid var(--line); }
+  .btn-outline:hover { border-color: var(--text-soft); }
+
+  /* STATS */
+  .stats-strip {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    border: 1px solid var(--line);
+    border-radius: 10px; overflow: hidden;
+    margin: 3rem 0 0;
+  }
+  .stat {
+    padding: 1.1rem 1.25rem;
+    border-right: 1px solid var(--line);
+    background: var(--bg-warm);
+  }
+  .stat:last-child { border-right: none; }
+  .stat-n {
+    font-family: 'IBM Plex Serif', serif;
+    font-size: 1.55rem; font-weight: 400;
+    color: var(--text); line-height: 1; margin-bottom: 0.2rem;
+  }
+  .stat-l {
+    font-size: 0.7rem; font-weight: 500;
+    letter-spacing: 0.05em; text-transform: uppercase;
+    color: var(--text-faint);
+  }
+
+  /* SECTIONS */
+  section { padding: 4rem 0; border-bottom: 1px solid var(--line); }
+  section:last-of-type { border-bottom: none; }
+  h2 {
+    font-family: 'IBM Plex Serif', serif;
+    font-size: 1.35rem; font-weight: 400;
+    color: var(--text); margin-bottom: 0.3rem;
+  }
+  .section-sub { font-size: 0.875rem; color: var(--text-faint); margin-bottom: 2rem; }
+
+  /* SAMPLES */
+  .samples {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.85rem;
+  }
+  .sample {
+    display: flex; flex-direction: column;
+    padding: 1.25rem;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    text-decoration: none; color: inherit;
+    background: var(--bg-warm);
+    transition: border-color 0.15s, background 0.15s;
+  }
+  .sample:hover { border-color: #aaa; background: #f1f0ec; }
+  .sample-badge {
+    display: inline-block;
+    font-size: 0.65rem; font-weight: 500;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--green);
+    background: var(--green-bg);
+    border: 1px solid var(--green-border);
+    border-radius: 20px;
+    padding: 0.15rem 0.6rem;
+    margin-bottom: 0.75rem; width: fit-content;
+  }
+  .sample-title { font-size: 0.9rem; font-weight: 500; color: var(--text); margin-bottom: 0.4rem; line-height: 1.4; }
+  .sample-desc { font-size: 0.8rem; color: var(--text-soft); line-height: 1.6; flex: 1; }
+  .sample-arrow { font-size: 0.8rem; color: var(--text-faint); margin-top: 1rem; }
+
+  /* ABOUT */
+  .about-body p { color: var(--text-soft); margin-bottom: 1rem; }
+  .about-body p:last-child { margin-bottom: 0; }
+  .about-body strong { color: var(--text); font-weight: 500; }
+
+  /* SKILLS TABLE */
+  .skills-block {
+    margin-top: 2rem;
+    border: 1px solid var(--line);
+    border-radius: 10px; overflow: hidden;
+  }
+  .skill-row {
+    display: flex; align-items: baseline; gap: 1rem;
+    padding: 0.8rem 1.1rem;
+    border-bottom: 1px solid var(--line);
+    font-size: 0.875rem;
+  }
+  .skill-row:last-child { border-bottom: none; }
+  .skill-row:nth-child(odd) { background: var(--bg); }
+  .skill-row:nth-child(even) { background: var(--bg-warm); }
+  .skill-cat {
+    min-width: 140px; flex-shrink: 0;
+    font-size: 0.7rem; font-weight: 500;
+    letter-spacing: 0.05em; text-transform: uppercase;
+    color: var(--text);
+  }
+  .skill-vals { color: var(--text-soft); }
+  .skills-header {
+    background: var(--text);
+    padding: 0.65rem 1.1rem;
+    display: flex; gap: 1rem;
+  }
+  .skills-header span {
+    font-size: 0.68rem; font-weight: 500;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+  }
+  .skills-header span:first-child { min-width: 140px; flex-shrink: 0; }
+
+  /* EXPERIENCE */
+  .jobs { display: flex; flex-direction: column; }
+  .job { padding: 1.4rem 0; border-bottom: 1px solid var(--line); }
+  .job:last-child { border-bottom: none; }
+  .job-header {
+    display: flex; justify-content: space-between; align-items: baseline;
+    gap: 1rem; margin-bottom: 0.2rem;
+  }
+  .job-title { font-size: 0.975rem; font-weight: 500; color: var(--text); }
+  .job-date { font-size: 0.775rem; color: var(--text-faint); white-space: nowrap; flex-shrink: 0; }
+  .job-company { font-size: 0.83rem; color: var(--text-soft); margin-bottom: 0.55rem; }
+  .job-desc { font-size: 0.875rem; color: var(--text-soft); line-height: 1.7; }
+  .job-awards { margin-top: 0.65rem; display: flex; flex-wrap: wrap; gap: 0.35rem; }
+  .award {
+    display: inline-flex; align-items: center; gap: 4px;
+    font-size: 0.7rem; font-weight: 500;
+    color: #7a5c00; background: #fef9ee;
+    border: 1px solid #e8d98a; border-radius: 20px;
+    padding: 0.15rem 0.65rem;
+  }
+  .award-dot { width: 5px; height: 5px; border-radius: 50%; background: #c9a530; flex-shrink: 0; }
+
+  /* CONTACT */
+  .contact-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 0.85rem; margin-top: 1.75rem;
+  }
+  .contact-card {
+    display: flex; align-items: center; gap: 0.85rem;
+    padding: 1rem 1.1rem;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    text-decoration: none; color: var(--text);
+    background: var(--bg-warm);
+    transition: border-color 0.15s, background 0.15s;
+  }
+  .contact-card:hover { border-color: #aaa; background: #f1f0ec; }
+  .contact-icon {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: var(--bg); border: 1px solid var(--line);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.8rem; color: var(--text-soft);
+    flex-shrink: 0; font-weight: 500; font-family: 'IBM Plex Serif', serif;
+  }
+  .contact-card-label {
+    font-size: 0.67rem; font-weight: 500;
+    letter-spacing: 0.07em; text-transform: uppercase;
+    color: var(--text-faint); display: block; margin-bottom: 0.1rem;
+  }
+  .contact-card-value { font-size: 0.83rem; color: var(--text); }
+
+  footer {
+    padding: 2rem 1.75rem;
+    text-align: center;
+    font-size: 0.78rem;
+    color: var(--text-faint);
+    border-top: 1px solid var(--line);
+  }
+
+  @media (max-width: 560px) {
+    .stats-strip { grid-template-columns: 1fr 1fr; }
+    .stat:nth-child(2) { border-right: none; }
+    .stat:nth-child(1), .stat:nth-child(2) { border-bottom: 1px solid var(--line); }
+    .contact-grid { grid-template-columns: 1fr; }
+    .samples { grid-template-columns: 1fr; }
+    .nav-links { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="site-name" href="#">Dodli Nandi</a>
+  <ul class="nav-links">
+    <li><a href="#writing">Writing</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<div class="page">
+
+  <div class="hero">
+    <div class="hero-tag"><span class="hero-tag-dot"></span>Technical Writer · Bengaluru, India</div>
+    <h1>Hi, I'm Dodli.<br><em>I turn complex information into an easy documentation experience.</em></h1>
+    <p>I'm a technical writer at Whatfix, where I write documentation for AI-first SaaS products. Before this, I spent a decade in content marketing — which means I think about readers, not just information.</p>
+    <p>My path is a bit unusual: language editor → content strategist → technical writer. That journey shapes how I work. I don't just document features — I think about what users are actually trying to do.</p>
+    <div class="hero-btns">
+      <a href="#writing" class="btn btn-solid">See my writing</a>
+      <a href="/cdn-cgi/l/email-protection#2f4b414b404b43466f48424e4643014c4042" class="btn btn-outline">Get in touch</a>
+      <a href="https://www.linkedin.com/in/dodli-13400a107" target="_blank" class="btn btn-outline">LinkedIn</a>
+    </div>
+
+    <div class="stats-strip">
+      <div class="stat">
+        <div class="stat-n">11+</div>
+        <div class="stat-l">Years writing</div>
+      </div>
+      <div class="stat">
+        <div class="stat-n">$27M+</div>
+        <div class="stat-l">ARR impacted</div>
+      </div>
+      <div class="stat">
+        <div class="stat-n">16+</div>
+        <div class="stat-l">Community posts</div>
+      </div>
+      <div class="stat">
+        <div class="stat-n">2</div>
+        <div class="stat-l">Awards in year one</div>
+      </div>
+    </div>
+  </div>
+
+  <section id="writing">
+    <h2>Writing samples</h2>
+    <p class="section-sub">All from Whatfix's public documentation, where I work as Information Developer II.</p>
+    <div class="samples">
+
+      <div class="sample">
+        <div class="sample-badge">Product overview</div>
+        <div class="sample-title">Whatfix Web Overview</div>
+        <div class="sample-desc">Orientation page mapping the full Whatfix platform across 12 documentation domains.</div>
+      </div>
+
+      <div class="sample">
+        <div class="sample-badge">UI reference</div>
+        <div class="sample-title">Overview of the Whatfix Guidance Dashboard</div>
+        <div class="sample-desc">UI reference with action–UI tables and annotated screenshots. The kind of doc users bookmark.</div>
+      </div>
+
+      <div class="sample">
+        <div class="sample-badge">Conceptual + how-to</div>
+        <div class="sample-title">In-app Content</div>
+        <div class="sample-desc">Concept to practice — explains element selection with strong vs weak comparisons.</div>
+      </div>
+
+      <div class="sample">
+        <div class="sample-badge">Procedural</div>
+        <div class="sample-title">Add voiceovers to Whatfix videos of Flows</div>
+        <div class="sample-desc">Step-by-step guide for multi-language AI voiceovers with role-based callouts and beta notes.</div>
+      </div>
+
+      <div class="sample">
+        <div class="sample-badge">Troubleshooting</div>
+        <div class="sample-title">SVG icons appear cropped</div>
+        <div class="sample-desc">Issue → three solutions with code-level detail and best practice guidance.</div>
+      </div>
+
+      <a class="sample" href="https://open.substack.com/pub/dodli1/p/what-content-marketing-taught-me" target="_blank">
+        <div class="sample-badge">Essay</div>
+        <div class="sample-title">What content marketing taught me about technical writing</div>
+        <div class="sample-desc">What 10 years of content strategy transfers to technical writing — and what doesn't.</div>
+        <div class="sample-arrow">Read on Substack ↗</div>
+      </a>
+
+    </div>
+  </section>
+
+  <section id="about">
+    <h2>A bit about me</h2>
+    <p class="section-sub">The unusual path that got me here.</p>
+    <div class="about-body">
+      <p>I've been writing professionally since 2014 — first as a language editor for STEM books (Cambridge University Press, Wiley Blackwell), then as a content editor at IDP Education, then through a long stretch in content marketing, and now as a technical writer at Whatfix.</p>
+      <p>At Whatfix, I own documentation for <strong>AI-first product features, SSO and authentication, and in-app guidance workflows</strong>. I'm involved early — sitting in on design reviews, doing UAT testing, joining customer calls — because good documentation starts before the feature ships, not after.</p>
+      <p>I've contributed to documentation that directly supported over <strong>$27M in ARR</strong>. Not as a vanity metric — but because self-service documentation genuinely reduces support load and unblocks adoption. That's the work I care about.</p>
+      <p>I'm curious about accessibility and usability writing, information architecture, and the gap between what documentation says and what users actually need. I occasionally write about this on Substack.</p>
+    </div>
+    <div class="skills-block">
+      <div class="skills-header">
+        <span>Area</span>
+        <span>Tools & skills</span>
+      </div>
+      <div class="skill-row">
+        <span class="skill-cat">Documentation</span>
+        <span class="skill-vals">Document360 · Confluence · Markdown · HTML</span>
+      </div>
+      <div class="skill-row">
+        <span class="skill-cat">API docs</span>
+        <span class="skill-vals">Postman · Swagger</span>
+      </div>
+      <div class="skill-row">
+        <span class="skill-cat">Visuals & video</span>
+        <span class="skill-vals">Camtasia · Snagit · Draw.io · Canva</span>
+      </div>
+      <div class="skill-row">
+        <span class="skill-cat">Workflow</span>
+        <span class="skill-vals">Jira · Agile/Scrum · UAT testing · WCAG</span>
+      </div>
+      <div class="skill-row">
+        <span class="skill-cat">Additional skills</span>
+        <span class="skill-vals">Semrush · Google Analytics · WebEngage · A/B testing</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="experience">
+    <h2>Experience</h2>
+    <p class="section-sub">11 years, a few industries, one through-line: clear writing.</p>
+    <div class="jobs">
+
+      <div class="job">
+        <div class="job-header">
+          <span class="job-title">Information Developer II</span>
+          <span class="job-date">Oct 2024 – present</span>
+        </div>
+        <div class="job-company">Whatfix · Bengaluru</div>
+        <div class="job-desc">Writing and maintaining product documentation for a B2B SaaS digital adoption platform. I own AI feature docs, SSO and authentication, in-app guidance, and release notes. I work embedded with product and engineering — UAT, design reviews, bug bashes — and use analytics to find and close documentation gaps proactively.</div>
+        <div class="job-awards">
+          <span class="award"><span class="award-dot"></span>Promoted ID1 → ID2 within a year</span>
+          <span class="award"><span class="award-dot"></span>AI Generator Award</span>
+          <span class="award"><span class="award-dot"></span>Spot Award</span>
+        </div>
+      </div>
+
+      <div class="job">
+        <div class="job-header">
+          <span class="job-title">Content Marketing Specialist</span>
+          <span class="job-date">May – Aug 2024</span>
+        </div>
+        <div class="job-company">ContactPoint 360 (Zinus.com)</div>
+        <div class="job-desc">B2C content strategy for a global D2C e-commerce brand. Content campaigns contributed to <a href="https://dodli.substack.com/p/usd30000-for-a-d2c-client-whats-behind" target="_blank">$30,000 in revenue</a> for the client.</div>
+      </div>
+
+      <div class="job">
+        <div class="job-header">
+          <span class="job-title">Assistant Content Manager — CRM</span>
+          <span class="job-date">Sep 2021 – Jan 2024</span>
+        </div>
+        <div class="job-company">Great Learning · Bengaluru</div>
+        <div class="job-desc">Owned end-to-end email and CRM content strategy — monthly calendars, drip campaigns, A/B testing, segmentation, and customer journey mapping across email, WhatsApp, SMS, and web push.</div>
+      </div>
+
+      <div class="job">
+        <div class="job-header">
+          <span class="job-title">Lead Content Marketer</span>
+          <span class="job-date">Jan – Aug 2021</span>
+        </div>
+        <div class="job-company">Brainvalley Solutions · Chennai</div>
+        <div class="job-desc">Content strategy across two business units. SEO-focused blog posts, landing pages, case studies, newsletters, and social. Also managed and reviewed junior writers.</div>
+      </div>
+
+      <div class="job">
+        <div class="job-header">
+          <span class="job-title">Digital Content Editor</span>
+          <span class="job-date">Jun 2016 – Nov 2018</span>
+        </div>
+        <div class="job-company">IDP Education Ltd · Chennai</div>
+        <div class="job-desc">B2C and B2B content for a global education brand. Blog posts, video scripts, chatbot content, BRDs, UI copy, and landing pages. Measured performance with Google Analytics.</div>
+      </div>
+
+      <div class="job">
+        <div class="job-header">
+          <span class="job-title">Associate Editor</span>
+          <span class="job-date">Nov 2018 – Dec 2019</span>
+        </div>
+        <div class="job-company">MPS Limited · Chennai</div>
+        <div class="job-desc">Developmental editing for scientific journals (Royal Society of Chemistry). Quality assurance, style guide compliance, project management.</div>
+      </div>
+
+      <div class="job">
+        <div class="job-header">
+          <span class="job-title">Language Editor</span>
+          <span class="job-date">Jul 2014 – May 2016</span>
+        </div>
+        <div class="job-company">Straive · Puducherry</div>
+        <div class="job-desc">Language editing for STEM and Humanities books for Cambridge University Press and Wiley Blackwell.</div>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="contact">
+    <h2>Get in touch</h2>
+    <p class="section-sub">Happy to talk documentation, content strategy, or career transitions.</p>
+    <div class="contact-grid">
+      <a class="contact-card" href="/cdn-cgi/l/email-protection#680c060c070c0401280f05090104460b0705">
+        <div class="contact-icon">@</div>
+        <div>
+          <span class="contact-card-label">Email</span>
+          <span class="contact-card-value"><span class="__cf_email__" data-cfemail="f1959f959e959d98b1969c90989ddf929e9c">[email&#160;protected]</span></span>
+        </div>
+      </a>
+      <a class="contact-card" href="https://www.linkedin.com/in/dodli-13400a107" target="_blank">
+        <div class="contact-icon">in</div>
+        <div>
+          <span class="contact-card-label">LinkedIn</span>
+          <span class="contact-card-value">dodli-13400a107</span>
+        </div>
+      </a>
+      <a class="contact-card" href="https://open.substack.com/pub/dodli1/p/what-content-marketing-taught-me" target="_blank">
+        <div class="contact-icon">✍</div>
+        <div>
+          <span class="contact-card-label">Substack</span>
+          <span class="contact-card-valu
